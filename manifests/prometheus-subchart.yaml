@@ -1,0 +1,22 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prometheus
+  namespace: rich-monkey
+spec:
+  project: default
+  source:
+    path: charts/prometheus
+    repoURL: https://github.com/gto481/techxchange-gitops-lab.git
+    targetRevision: HEAD
+  destination:
+    namespace: rich-monkey
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
